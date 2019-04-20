@@ -1,0 +1,64 @@
+法一： 利用哈希表
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+   public Boolean hasCycle(ListNode head) {
+          Set<ListNode> nodeseen = new HashSet<>();
+        while(head != null){                           
+            if (nodeseen.contains(head)){   //表中如果包含该元素则是环形链表
+                return true;
+            }else { 
+                nodeseen.add(head);         //表中没有该元素则添加进表
+            }
+            head = head.next;
+        }                                   //不是环形链表，此时head 为 null
+        return false;
+    }
+}
+
+法二： 使用快慢指针
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        if (head == null || head.next == null) {
+        return false;
+    }
+    ListNode slow = head;
+    ListNode fast = head.next;
+    while (slow != fast) {
+        if (fast.next == null || fast.next.next == null) {
+            return false;
+        }
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    return true;
+    }
+}
+
+
+class Solution {
+    public boolean hasCycle(ListNode head) {
+        if (head == null || head.next == null){
+            return false;
+        }
+        ListNode fast = head;
+        ListNode slow = head;
+        while (fast.next != null && fast.next.next != null){   //当出现null时说明不存在环，退出循环。
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast){                                  //当快慢指针相遇时说明存在环。
+                return true;
+            }
+        }
+        return false;
+    }
+}
